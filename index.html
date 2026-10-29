@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     index.html - the HOME PAGE of Vintage Cricket Gear.
+     HTML defines the STRUCTURE (what is on the page).
+     CSS (css/styles.css) defines the LOOK, JS (js/*.js) the BEHAVIOUR.
+     Keeping these three apart is a core professional habit: each file
+     has one job, so changes in one don't break the others.
+     ============================================================ -->
+<html lang="en"> <!-- lang helps screen readers and Google pick the right language -->
+<head>
+  <meta charset="UTF-8" /> <!-- lets the page show characters like £ and emoji correctly -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- makes the layout work on phones -->
+  <title>Vintage Cricket Gear | Rare &amp; Classic Cricket Shirts</title> <!-- shown in the browser tab AND Google results (SEO) -->
+  <meta name="description" content="Rare, vintage and player-issue cricket shirts from England, county and international sides. Graded condition, shipped from the UK." /> <!-- the grey snippet under your link on Google -->
+  <meta name="theme-color" content="#0b1f4b" /> <!-- colours the browser bar on mobile -->
+
+  <!-- Open Graph tags: control the preview card when the link is shared on WhatsApp, Instagram, etc. -->
+  <meta property="og:title" content="Vintage Cricket Gear" />
+  <meta property="og:description" content="Rare &amp; classic cricket shirts, graded and shipped from the UK." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts: Playfair Display for headings (classic, heritage feel), Inter for body text (clean, readable).
+       preconnect makes the font download start earlier = faster page. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" /> <!-- our own stylesheet -->
+</head>
+
+<body>
+  <!-- Skip link: invisible until focused with the keyboard. Accessibility requirement and a nice portfolio detail. -->
+  <a class="skip-link" href="#shop">Skip to shirts</a>
+
+  <!-- ========== ANNOUNCEMENT BAR ========== -->
+  <div class="announce">New shirts added every week &middot; Free UK delivery over £75</div>
+
+  <!-- ========== HEADER / NAVIGATION ========== -->
+  <header class="site-header" id="siteHeader">
+    <a class="logo" href="#top" aria-label="Vintage Cricket Gear home">
+      <span class="logo-mark">VCG</span> <!-- little badge-style monogram -->
+      <span class="logo-text">Vintage Cricket Gear</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#eras">Eras</a>
+      <a href="#grading">Grading</a>
+      <a href="#sell">Sell</a>
+    </nav>
+    <!-- The cart button shows how many items are in the basket; main.js updates #cartCount -->
+    <button class="cart-btn" id="cartBtn" aria-label="Open basket">
+      Basket <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <main id="top">
+    <!-- ========== HERO: the "wow on first look" section ========== -->
+    <section class="hero" id="hero">
+      <!-- The waving Union Jack lives in an SVG so it stays razor sharp at any screen size.
+           js/flag.js animates the SVG filter inside it to create the wave. -->
+      <div class="flag-wrap" aria-hidden="true"> <!-- aria-hidden: purely decorative, screen readers skip it -->
+        <svg class="flag" id="flag" viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <!-- feTurbulence makes smooth random noise; feDisplacementMap uses that noise to push
+                 pixels sideways/up/down. Animating the noise = a rippling flag. -->
+            <filter id="wave" x="-10%" y="-10%" width="120%" height="120%">
+              <feTurbulence id="waveNoise" type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="3" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <!-- Clip paths used by the diagonal red stripes so they stay inside the flag -->
+            <clipPath id="s"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" /></clipPath>
+            <clipPath id="t"><path d="M0,0 v30 h60 v-30 z" /></clipPath>
+          </defs>
+          <g filter="url(#wave)"> <!-- everything inside this group gets the wave effect -->
+            <!-- Flag geometry follows the official proportions of the Union Jack (60x30 grid) -->
+            <rect width="60" height="30" fill="#012169" /> <!-- blue field -->
+            <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" /> <!-- white diagonals (St Andrew) -->
+            <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4" /> <!-- red diagonals (St Patrick) -->
+            <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" /> <!-- white cross (St George border) -->
+            <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6" /> <!-- red cross (St George) -->
+          </g>
+        </svg>
+        <div class="flag-shade"></div> <!-- a moving light/shadow overlay that sells the fabric illusion -->
+      </div>
+
+      <div class="hero-inner">
+        <p class="eyebrow reveal">Est. for collectors &middot; Shipped from the UK</p>
+        <h1 class="hero-title reveal">
+          <!-- Each word is its own span so CSS can animate them in one after another -->
+          <span class="word" style="--i:0">Wear</span>
+          <span class="word" style="--i:1">the</span>
+          <span class="word accent" style="--i:2">history</span>
+          <span class="word" style="--i:3">of</span>
+          <span class="word" style="--i:4">the</span>
+          <span class="word" style="--i:5">game.</span>
+        </h1>
+        <p class="hero-sub reveal">Rare, vintage and player-issue cricket shirts. Every piece graded, photographed and ready to play another innings.</p>
+        <div class="hero-cta reveal">
+          <a class="btn btn-primary" href="#shop">Shop the shirts</a>
+          <a class="btn btn-ghost" href="#eras">Browse by era</a>
+        </div>
+      </div>
+
+      <!-- Decorative cricket ball that bounces; pure CSS, see .ball in styles.css -->
+      <div class="ball" aria-hidden="true"></div>
+      <div class="scroll-hint" aria-hidden="true">Scroll</div>
+    </section>
+
+    <!-- ========== TICKER: endlessly scrolling strip (trust + brand feel) ========== -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <!-- Content is written twice so when the first copy scrolls away, the second is right behind it = seamless loop -->
+        <span>Player Issue</span><span>Graded 1-10</span><span>County &amp; International</span><span>Free UK Delivery £75+</span><span>Authentic Vintage</span>
+        <span>Player Issue</span><span>Graded 1-10</span><span>County &amp; International</span><span>Free UK Delivery £75+</span><span>Authentic Vintage</span>
+      </div>
+    </div>
+
+    <!-- ========== SHOP: product grid with filters ========== -->
+    <section class="section" id="shop">
+      <div class="section-head reveal">
+        <h2>The Collection</h2>
+        <p>Filter by size or find player-issue gems.</p>
+      </div>
+
+      <!-- Filter buttons. data-filter values are read by shop.js -->
+      <div class="filters reveal" id="filters" role="group" aria-label="Filter shirts">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="player">Player Issue</button>
+        <button class="chip" data-filter="S">Small</button>
+        <button class="chip" data-filter="M">Medium</button>
+        <button class="chip" data-filter="L">Large</button>
+        <button class="chip" data-filter="XL">XL</button>
+        <button class="chip" data-filter="sale">Sale</button>
+      </div>
+
+      <!-- shop.js fills this empty grid with product cards from products.js -->
+      <div class="grid" id="productGrid" aria-live="polite"></div>
+    </section>
+
+    <!-- ========== ERAS: category tiles ========== -->
+    <section class="section section-dark" id="eras">
+      <div class="section-head reveal">
+        <h2>Shop by Era</h2>
+        <p>Every decade had its own look.</p>
+      </div>
+      <div class="eras">
+        <a class="era reveal" href="#shop" data-era="1990s"><span class="era-year">90s</span><span class="era-name">Coloured Clothing Classics</span></a>
+        <a class="era reveal" href="#shop" data-era="2000s"><span class="era-year">00s</span><span class="era-name">Sponsor-Logo Golden Age</span></a>
+        <a class="era reveal" href="#shop" data-era="2010s"><span class="era-year">10s</span><span class="era-name">Modern Kits</span></a>
+      </div>
+    </section>
+
+    <!-- ========== GRADING: explains the 1-10 scale (builds buyer trust) ========== -->
+    <section class="section" id="grading">
+      <div class="section-head reveal">
+        <h2>How we grade</h2>
+        <p>No surprises. Every shirt is scored out of 10.</p>
+      </div>
+      <div class="grades">
+        <div class="grade reveal"><b>10/10</b><span>Mint. Unworn or as new, tags or equivalent.</span></div>
+        <div class="grade reveal"><b>9&ndash;9.5</b><span>Excellent. Very light wear, no visible flaws.</span></div>
+        <div class="grade reveal"><b>7&ndash;8.5</b><span>Good. Honest wear, small marks noted in the listing.</span></div>
+      </div>
+    </section>
+
+    <!-- ========== SELL / NEWSLETTER ========== -->
+    <section class="section section-flag" id="sell">
+      <div class="signup reveal">
+        <h2>Get first dibs on new drops</h2>
+        <p>Join the list. Rare shirts rarely last the week.</p>
+        <!-- novalidate lets our own JS show friendlier errors; the form isn't sent anywhere in the prototype -->
+        <form id="signupForm" novalidate>
+          <label class="sr-only" for="email">Email address</label>
+          <input id="email" type="email" placeholder="you@example.com" required />
+          <button class="btn btn-primary" type="submit">Notify me</button>
+        </form>
+        <p class="form-msg" id="formMsg" role="status"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Vintage Cricket Gear &middot; vintagecricketgear.com</p>
+    <p class="muted">Independent retailer. Not affiliated with any club, board or kit manufacturer.</p> <!-- protects you legally when selling branded vintage items -->
+  </footer>
+
+  <!-- Toast: small pop-up message (e.g. "Added to basket") -->
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- Scripts go at the END of body so the page content loads first (faster perceived speed).
+       "defer" is not needed here for that reason. Order matters: data first, then code that uses it. -->
+  <script src="js/products.js"></script>
+  <script src="js/flag.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
